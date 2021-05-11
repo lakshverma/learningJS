@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Events: Task 3</title>
+    <style>
+      p {
+        color: purple;
+        margin: 0.5em 0;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      button {
+        display: block;
+        margin: 20px 0 20px 20px;
+      }
+
+      .button-bar {
+        padding: 20px 0;
+      }
+    </style>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+
+  <body>
+    <section class="preview"></section>
+
+    <div class="button-bar">
+      <button data-color="red">Red</button>
+      <button data-color="yellow">Yellow</button>
+      <button data-color="green">Green</button>
+      <button data-color="purple">Purple</button>
+    </div>
+  </body>
+  <script>
+    let buttonBar = document.querySelector(".button-bar");
+
+    // Add event listener on the parent (div) to use delegation and avoid multiple listeners on child elements
+    buttonBar.addEventListener("click", colorChanger);
+
+    function colorChanger(e) {
+      console.log(e.target.getAttribute("data-color"));
+      if (e.target && e.target.nodeName == "BUTTON") {
+        buttonBar.style.backgroundColor = `${e.target.getAttribute(
+          "data-color"
+        )}`;
+      }
+    }
+  </script>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Events: Task 2</title>
+    <style>
+      p {
+        color: purple;
+        margin: 0.5em 0;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      canvas {
+        border: 1px solid black;
+      }
+    </style>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+
+  <body>
+    <section class="preview"></section>
+
+    <canvas width="480" height="320" tabindex="0"> </canvas>
+  </body>
+  <script>
+    let canvas = document.querySelector("canvas");
+    let ctx = canvas.getContext("2d");
+
+    function drawCircle(x, y, size) {
+      ctx.fillStyle = "white";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.beginPath();
+      ctx.fillStyle = "black";
+      ctx.arc(x, y, size, 0, 2 * Math.PI);
+      ctx.fill();
+    }
+
+    let x = 50;
+    let y = 50;
+    const size = 30;
+
+    drawCircle(x, y, size);
+
+    width = Number(canvas.getAttribute("width"));
+    height = Number(canvas.getAttribute("height"));
+    console.log(width, height);
+    // 1. Attach an eventlistener to the canvas or window.
+    window.addEventListener("keydown", moveCircle);
+    // 2. In the function, use keydown event and capture the key pressed using keyboardevent.code
+    function moveCircle(event) {
+      console.log(event.code);
+      // 3. Use switch statements to check keypress and if statements to ensure the circle stays within the canvas.
+      switch (event.code) {
+        case "KeyW":
+          if (y <= size) {
+            console.log(
+              "Circle is touching the boundary of canvas. Cannot move further"
+            );
+          } else {
+            y -= 10;
+            drawCircle(x, y, size);
+          }
+          break;
+
+        case "KeyA":
+          if (x <= size) {
+            console.log(
+              "Circle is touching the boundary of canvas. Cannot move further"
+            );
+          } else {
+            x -= 10;
+            drawCircle(x, y, size);
+          }
+          break;
+
+        case "KeyS":
+          if (y >= height - size) {
+            console.log(
+              "Circle is touching the boundary of canvas. Cannot move further"
+            );
+          } else {
+            y += 10;
+            drawCircle(x, y, size);
+          }
+          break;
+        case "KeyD":
+          if (x >= width - size) {
+            console.log(
+              "Circle is touching the boundary of canvas. Cannot move further"
+            );
+          } else {
+            x += 10;
+            drawCircle(x, y, size);
+          }
+          break;
+
+        default:
+          console.log(
+            "Not a valid keypress. Try pressing W, A, S or D to move the circle around "
+          );
+      }
+    }
+  </script>
+</html>
