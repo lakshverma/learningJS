@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <title>Simple setInterval clock</title>
+    <style>
+      p {
+        font-family: sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <p class="clock"></p>
+    <!-- Buttons to control the stopwatch -->
+    <div class="stopwatch-buttons">
+      <button type="button" class="start-stop">Start</button>
+      <button type="button" class="reset">Reset</button>
+    </div>
+
+    <script>
+      startStopBtn = document.querySelector(".start-stop");
+      resetBtn = document.querySelector(".reset");
+      // Setup the necessary stopwatch variables
+      let stopWatch = 0;
+      // 2. Capture the start time in a variable once the start button is clicked
+      let startTime = 0;
+      let createClock;
+      let time = "00:00:00s";
+      document.querySelector(".clock").textContent = time;
+
+      // 3. Calculate the difference (in ms) btw current time and start time
+      // 4. Convert the ms time into hh:mm:ss format
+      // 5. Update the clock paragraph with the stopwatch time
+      // 6. Update the start button to stop button
+      // 7. When stop button is clicked, reset the time counter to zero and update the stop button to 'Start' again.
+
+      // Setup event listeners on Start/Stop and reset buttons
+      startStopBtn.addEventListener("click", stopWatchTrigger);
+      resetBtn.addEventListener("click", resetClock);
+
+      // Function that triggers the stopWatch
+      function stopWatchTrigger() {
+        // Starts the stopwatch when the start button is initially clicked
+        if (startStopBtn.textContent === "Start" && startTime === 0) {
+          startStopBtn.textContent = "Stop";
+          startTime = Date.now();
+          createClock = setInterval(displayTime, 1000, startTime, 0);
+          // If the button is clicked when stopwatch is paused
+        } else if (startStopBtn.textContent === "Start" && startTime > 0) {
+          startStopBtn.textContent = "Stop";
+          resumeTime = Date.now();
+          createClock = setInterval(displayTime, 1000, resumeTime, stopWatch);
+          //If the button is clicked when stopwatch is running. This pauses the watch.
+        } else {
+          startStopBtn.textContent = "Start";
+          clearTimeout(createClock);
+        }
+      }
+
+      // Converts time (in milliseconds) in hh:mm:ss format and pushes it to DOM
+      function displayTime(startTime, elapsedTime) {
+        stopWatch = elapsedTime + Date.now() - startTime;
+
+        let hourConvert = stopWatch / (1000 * 60 * 60);
+        let hours = Math.floor(stopWatch / (1000 * 60 * 60));
+
+        let minConvert = (hourConvert - hours) * 60;
+        let minutes = Math.floor(minConvert);
+
+        let secConvert = (minConvert - minutes) * 60;
+        let seconds = Math.floor(secConvert);
+
+        if (hours < 10) {
+          hours = "0" + hours;
+        }
+
+        if (minutes < 10) {
+          minutes = "0" + minutes;
+        }
+
+        if (seconds < 10) {
+          seconds = "0" + seconds;
+        }
+        time = `${hours}:${minutes}:${seconds}s`;
+        document.querySelector(".clock").textContent = time;
+      }
+
+      // Resets clock and clears the interval
+      function resetClock() {
+        clearInterval(createClock);
+        startStopBtn.textContent = "Start";
+        stopWatch = 0;
+        startTime = 0;
+        time = "00:00:00s";
+        document.querySelector(".clock").textContent = time;
+      }
+    </script>
+  </body>
+</html>

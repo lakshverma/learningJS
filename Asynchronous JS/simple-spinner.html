@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <title>My test page</title>
+    <style>
+      html {
+        background-color: white;
+        height: 100%;
+      }
+
+      body {
+        height: inherit;
+        background-color: peachpuff;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      div {
+        display: inline-block;
+        font-size: 10rem;
+      }
+    </style>
+  </head>
+  <body>
+    <p>This is my page</p>
+    <div>↻</div>
+
+    <script>
+      const spinner = document.querySelector("div");
+      const body = document.querySelector("body");
+      let rotateCount = 0;
+      let startTime = null;
+      let rAF;
+      let isSpinning = false;
+      body.addEventListener('click', startStop)
+      
+      function startStop() {
+          if (isSpinning === true) {
+            cancelAnimationFrame(rAF);
+            isSpinning = false;
+          }
+          else {
+            draw();
+          }
+      }
+
+
+      function draw(timestamp) {
+        if (!startTime) {
+          startTime = timestamp;
+        }
+
+        rotateCount = (timestamp - startTime) / 3;
+        rotateCount %= 360;
+        spinner.style.transform = `rotate(${rotateCount}deg)`;
+        rAF = requestAnimationFrame(draw);
+        isSpinning = true;
+      }
+    </script>
+  </body>
+</html>

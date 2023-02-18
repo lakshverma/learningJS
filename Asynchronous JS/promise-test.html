@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <title>My test page</title>
+  </head>
+  <body>
+    <p>This is my page</p>
+    <script>
+      // fetch('coffee.jpg')
+      //   .then(response => {
+      //     if (!response.ok) {
+      //       throw new Error(`HTTP error! status: ${response.status}`);
+      //     }
+      //     return response.blob();
+      //   })
+      //   .then(myBlob => {
+      //     let objectURL = URL.createObjectURL(myBlob);
+      //     let image = document.createElement('img');
+      //     image.src = objectURL;
+      //     document.body.appendChild(image);
+      //   })
+      //   .catch(e => {
+      //     console.log('There has been a problem with your fetch operation: ' + e.message);
+      //   });
+
+        async function myfetch() {
+          let response = await fetch("coffee.jpg")
+          
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          let myblob = await response.blob();
+
+          let objectURL = URL.createObjectURL(myBlob);
+          let image = document.createElement('img');
+          image.src = objectURL;
+          document.body.appendChild(image);
+        }
+        
+        myfetch()
+        .catch(e => {
+          console.log('There has been a problem with your fetch operation: ' + e.message);
+        });
+
+    </script>
+  </body>
+</html>
